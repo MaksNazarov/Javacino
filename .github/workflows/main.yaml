@@ -20,7 +20,7 @@ jobs:
           echo "Building the project"
 
   deploy:
-    needs: test
+    needs: build
     if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
