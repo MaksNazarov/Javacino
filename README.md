@@ -1,6 +1,6 @@
 # CLI-Arch
 
-Java-based CLI interface.
+Java-based command line interface simulation.
 
 ## Table of Contents
 - [Description](#Description)

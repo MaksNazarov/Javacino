@@ -21,6 +21,6 @@ Following central classes are intended to be implemented:
 
 
 ### Testing environment
-Implemented with the __JUnit__ __framework__, this part of the project contains unit & integration used to verify correctness of main part. 
-__JUnit__ __framework__ was chosen because of familiarity of both contributors with it.
+Implemented with the __JUnit__ __framework__, this part of the project contains unit & integration tests used to verify correctness of main part. 
+__JUnit__ __framework__ was chosen because of familiarity of both contributors with it. __Mockito__ was chosen to simplify mock object creation.
 
