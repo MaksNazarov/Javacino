@@ -1,0 +1,32 @@
+name: Main CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display Triggering Event
+        run: |
+          echo "Triggered by: ${{ github.event_name }}"
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+             echo "Target branch: ${{ github.base_ref }}"
+          fi
+      - name: Build
+        run:
+          echo "Building the project"
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy
+        run: |
+          echo "Please come back later!" # TODO: Doxygen integration
