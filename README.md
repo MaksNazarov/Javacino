@@ -1,4 +1,4 @@
-# CLI-Arch
+# Javacino
 
 Java-based command line interface simulation.
 
@@ -6,12 +6,13 @@ Java-based command line interface simulation.
 - [Description](#Description)
 - [Dependencies](#dependencies)
 - [Getting Started]()
+- [Design Document](#design-document)
 - [Project structure](#project-structure)
 - [License](#license)
 
 ## Description
 
-CLI-Arch is a Java-based implementation of a Command-Line Interface (CLI) designed to provide a modular and extensible framework for executing commands. The project includes both the core CLI implementation and a robust testing environment to ensure reliability and correctness.
+Javacino is a Java-based implementation of a Command-Line Interface (CLI) designed to provide a modular and extensible framework for executing commands. The project includes both the core CLI implementation and a robust testing environment to ensure reliability and correctness.
 
 ## Dependencies
 Following libraries are used:
@@ -23,10 +24,13 @@ Following libraries are used:
 Clone the repository:
 
 ```
-git clone git@github.com:MaksNazarov/CLI-Arch.git
-cd cli-arch
+git clone git@github.com:MaksNazarov/Javacino.git
+cd javacino
 ```
 TODO: build instructions after first task implementation
+
+## Design document
+For project architecture description & decision motivation insights see [here](docs/DesignDocument.md).
 
 ## Project structure
 
