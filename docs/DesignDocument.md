@@ -32,8 +32,8 @@ Javacino should contain unit/integration tests.
 Several important architectural decisions should be highlighted.
 
 1. __Command__ interface:
-* Decision: all command/utility implementations share a common interface with overloadeable execute() method.
-* Rationale: simplifies storing & execution of complex expressions.
+* Decision: all command/utility implementations share a common interface with overloadeable execute() method which returns exit code of the command.
+* Rationale: simplifies storing & execution of complex expressions; exit code can be used as ''boolean variable'' (0 as True, others as False) with logical operators.
 
 2. __Parser__ output format:
 * Decision: Parser output has a form of postfix notation with pipe operator |, logical operators && and ||. The other elements are Command interface instances.
