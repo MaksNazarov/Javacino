@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import cli.Commands.EchoCommand;
 import cli.Commands.ExitCommand;
@@ -82,6 +83,12 @@ public class Executor {
                     output.append(line);
                 }
             }
+
+            if (!process.waitFor(10, TimeUnit.SECONDS)) {
+                process.destroy();
+                System.err.println("Command timed out");
+                return "";
+            }
             
             if (process.exitValue() != 0) {
                 System.err.println("External command failed with exit code: " + process.exitValue());
@@ -90,7 +97,7 @@ public class Executor {
             
             return output.toString();
             
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.err.println("Error executing external command: " + e.getMessage());
             return "";
         }

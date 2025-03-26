@@ -19,7 +19,8 @@ public class WcCommand implements Runnable {
     
     @Override
     public void run() {
-        try (BufferedReader reader = getReader()) {
+        try {
+            BufferedReader reader = getReader();
             int lines = 0;
             int words = 0;
             int chars = 0;
@@ -32,7 +33,7 @@ public class WcCommand implements Runnable {
             }
 
             System.out.printf("%d lines, %d words, %d chars%n", lines, words, chars);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
