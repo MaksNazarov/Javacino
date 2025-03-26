@@ -12,7 +12,7 @@ import picocli.CommandLine.Parameters;
 )
 public class EchoCommand implements Callable<String> {
     @Parameters(description = "Arguments for echo command")
-    private List<String> args;
+    List<String> args;
     
     @Override
     public String call() {
