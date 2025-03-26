@@ -24,6 +24,7 @@ import picocli.CommandLine.Command;
         ExitCommand.class,
         PwdCommand.class,
         WcCommand.class,
+        CommandLine.HelpCommand.class
     }
 )
 public class Executor {
