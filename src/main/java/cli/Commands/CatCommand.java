@@ -1,28 +1,28 @@
-package main.java.cli.Commands;
+package cli.Commands;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
-import java.util.List;
+import java.util.concurrent.Callable;
 
-public class CatCommand implements Command {
+import picocli.CommandLine.Parameters;
+
+public class CatCommand implements Callable<String> {
+    @Parameters(description = "File for content to print")
+    File file;
+
     @Override
-    public int execute(List<String> args) {
-        if (args.isEmpty()) {
-            System.err.println("cat: missing file operand");
-            return 1;
-        }
-        for (String file : args) {
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-            } catch (IOException e) {
-                System.err.println("cat: " + e.getMessage());
-                return 1;
+    public String call() {
+        StringBuilder content = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append(System.lineSeparator());
             }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return "";
         }
-        return 0;
+        return content.toString();
     }
 }

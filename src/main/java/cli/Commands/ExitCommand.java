@@ -1,11 +1,14 @@
-package main.java.cli.Commands;
+package cli.Commands;
 
-import java.util.List;
+import picocli.CommandLine.Command;
 
-public class ExitCommand implements Command {
+@Command (
+    name = "exit", 
+    description = "Exits the shell"
+)
+public class ExitCommand implements Runnable {
     @Override
-    public int execute(List<String> args) {
+    public void run() {
         System.exit(0);
-        return 0;
     }
 }

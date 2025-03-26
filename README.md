@@ -1,4 +1,4 @@
-# CLI-Arch
+# Javavino
 
 Java-based command line interface simulation.
 

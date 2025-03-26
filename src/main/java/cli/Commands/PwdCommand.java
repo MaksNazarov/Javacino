@@ -1,11 +1,18 @@
-package main.java.cli.Commands;
+package cli.Commands;
 
-import java.util.List;
+import java.nio.file.Paths;
+import java.util.concurrent.Callable;
 
-public class PwdCommand implements Command {
+import picocli.CommandLine.Command;
+
+
+@Command (
+    name = "pwd", 
+    description = "Prints current directory absolute path"
+)
+public class PwdCommand implements Callable<String> {
     @Override
-    public int execute(List<String> args) {
-        System.out.println(System.getProperty("user.dir"));
-        return 0;
+    public String call() {
+        return Paths.get("").toAbsolutePath().toString();
     }
 }
