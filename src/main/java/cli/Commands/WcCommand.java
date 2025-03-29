@@ -9,18 +9,17 @@ import java.io.InputStreamReader;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@Command (
-    name = "wc", 
-    description = "Counts lines, words, and characters in input"
+@Command(
+        name = "wc",
+        description = "Counts lines, words, and characters in input"
 )
 public class WcCommand implements Runnable {
-    @Parameters(description = "File to analyze", arity="0..*")
-    private File file;
-    
+    @Parameters(description = "File to analyze", arity = "0..*")
+    File file;
+
     @Override
     public void run() {
-        try {
-            BufferedReader reader = getReader();
+        try (BufferedReader reader = getReader()) {
             int lines = 0;
             int words = 0;
             int chars = 0;
