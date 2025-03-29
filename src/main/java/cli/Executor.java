@@ -37,7 +37,7 @@ public class Executor {
             List<String> args;
             for (int i = 0; i < command_queries.size(); i++) {
                 args = new ArrayList<>(command_queries.get(i));
-                if (cmd.getSubcommands().getOrDefault(args.get(0), null) == null) {
+                if (cmd.getSubcommands().getOrDefault(args.getFirst(), null) == null) {
                     result = (result == null) ? "" : result;
                     result = executeExternalCommand(args, result);
                 } else {
@@ -51,9 +51,9 @@ public class Executor {
     }
 
     private String executeCommand(String [] args) {
-        Integer error_code = cmd.execute(args);
+        int error_code = cmd.execute(args);
         if (error_code > 1) {
-            System.out.println("Command finished with errorcode: " + error_code.toString());
+            System.out.println("Command finished with error code: " + error_code);
             return "";
         }
         return cmd.getSubcommands().get(args[0]).getExecutionResult();
