@@ -19,6 +19,8 @@ Following libraries are used:
 
 - [Mockito](https://site.mockito.org/) - mocking framework to simplify mock object creation for testing.
 
+- [picocli](https://picocli.info/) - framework for creating Command Line Interface apps for JVM.
+
 ## Getting Started
 Clone the repository:
 

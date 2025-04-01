@@ -11,10 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import cli.Commands.EchoCommand;
-import cli.Commands.ExitCommand;
-import cli.Commands.PwdCommand;
-import cli.Commands.WcCommand;
+import cli.Commands.*;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -25,6 +22,7 @@ import picocli.CommandLine.Command;
         ExitCommand.class,
         PwdCommand.class,
         WcCommand.class,
+        GrepCommand.class,
         CommandLine.HelpCommand.class
     }
 )
