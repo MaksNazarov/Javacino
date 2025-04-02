@@ -3,9 +3,9 @@
 Java-based command line interface simulation.
 
 ## Table of Contents
-- [Description](#Description)
+- [Description](#description)
 - [Dependencies](#dependencies)
-- [Getting Started]()
+- [Getting Started](#getting-started)
 - [Project structure](#project-structure)
 - [License](#license)
 
@@ -33,6 +33,8 @@ TODO: build instructions after first task implementation
 ## Project structure
 
 See [here](docs/Project_structure.md).
+
+For some motivation behind dependencies choice & implementation decisions, see [here](docs/WhyWeDidThis.md).
 
 ## License
 

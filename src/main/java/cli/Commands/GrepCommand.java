@@ -1,5 +1,6 @@
 package cli.Commands;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,20 +20,20 @@ import picocli.CommandLine.Parameters;
 )
 public class GrepCommand implements Callable<String> {
 
-    @Option(names = {"-w"}, description = "Only word")
+    @Option(names = {"-w"}, description = "Match only the whole word; ignore matching part of larger word.")
     private boolean onlyWords = false;
 
-    @Option(names = {"-i"}, description = "Is case sensitive")
+    @Option(names = {"-i"}, description = "Is case sensitive.")
     private boolean caseInsensitive = false;
 
-    @Option(names = {"-A"}, description = "Amount of lines to show after a match")
+    @Option(names = {"-A"}, description = "Amount of lines to show after a match.")
     private Integer lineCount = 1;
 
-    @Parameters(description = "Arguments for grep command: pattern and list of places to search")
+    @Parameters(description = "Arguments for grep command: pattern and list of places to search.")
     List<String> args;
 
     @Override
-    public String call() throws Exception {
+    public String call() throws IllegalArgumentException, IOException {
         if (args == null || args.size() < 2) {
             throw new IllegalArgumentException("Usage: grep [-w] [-i] [-A N] pattern files...");
         }

@@ -5,7 +5,9 @@ The project itself consists of two parts:
 2. Testing environment
 
 ### CLI implementation
-This part of the project contains implementation of CLI interface.
+This part of the project contains implementation of CLI interface. 
+Command argument parsing & initialization is powered by [picocli](https://picocli.info/), 
+which was chosen for its familiarity and ease 
 
 Structure diagram:
 ![structure diagram](resources/CLI_component_diagram.jpg)
