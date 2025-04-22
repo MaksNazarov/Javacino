@@ -18,6 +18,7 @@ class PwdCommandTest {
 
     @Test
     void testCallMethodReturnsCurrentDirectory() {
+        // when called from current directory, returns current directory
         String result = pwdCommand.call();
 
         Path expectedPath = Paths.get("").toAbsolutePath();

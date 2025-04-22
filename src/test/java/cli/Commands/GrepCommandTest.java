@@ -19,7 +19,7 @@ class GrepCommandTest {
 
     @Test
     void testBasicGrepOneMatch() throws Exception {
-        // basic grep scenario without options works correctly
+        // basic grep single-match scenario without options works correctly
         Path file = createFile("test.txt", "zer0", "apple", "banana", "apple pie", "glottal stop", "Dublin");
         String[] args = {"apple", file.toString()};
         GrepCommand command = parseCommand(args);
@@ -29,7 +29,7 @@ class GrepCommandTest {
 
     @Test
     void testBasicGrepMultipleMatches() throws Exception {
-        // basic grep scenario without options works correctly
+        // basic grep multiple-match scenario without options works correctly
         Path file = createFile("test.txt", "zer0", "apple", "banana", "apple pie", "glottal stop", "Dublin");
 
         // when matches are in different lines

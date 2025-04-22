@@ -28,6 +28,7 @@ class WcCommandTest {
 
     @Test
     void testValidFile() throws IOException {
+        // single file with multiline content is processed correctly
         File tempFile = new File(tempDir, "test.txt");
         try (FileWriter writer = new FileWriter(tempFile)) {
             writer.write("Hello, world!\nThis is a test file.");
@@ -43,6 +44,7 @@ class WcCommandTest {
 
     @Test
     void testEmptyFile() throws IOException {
+        // empty file yields empty output
         File tempFile = new File(tempDir, "empty.txt");
         assertTrue(tempFile.createNewFile());
 
@@ -56,6 +58,7 @@ class WcCommandTest {
 
     @Test
     void testFileWithSpecialCharacters() throws IOException {
+        // special characters in a file, including multichar ones, are processed correctly
         File tempFile = new File(tempDir, "special.txt");
         try (FileWriter writer = new FileWriter(tempFile)) {
             writer.write("!@#$%^&*()\n\tTabbed Line\nNewline\n");
@@ -71,6 +74,7 @@ class WcCommandTest {
 
     @Test
     void testStandardInput() {
+        // string as input, not a file
         String input = "Hello, World!\nThis is a test.";
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
         System.setIn(inputStream);
@@ -84,6 +88,7 @@ class WcCommandTest {
 
     @Test
     void testMultipleFiles() throws IOException {
+        // multiple files with multiline content are processed correctly
         File file1 = new File(tempDir, "file1.txt");
         try (FileWriter writer = new FileWriter(file1)) {
             writer.write("Line 1\nLine 2");
