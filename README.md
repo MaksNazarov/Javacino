@@ -28,7 +28,20 @@ Clone the repository:
 git clone git@github.com:MaksNazarov/CLI-Arch.git
 cd cli-arch
 ```
-TODO: build instructions after first task implementation
+
+This project uses Gradle as its build tool. To build the project, ensure you have Gradle installed on your system. If not, you can download it from [here](https://gradle.org/install/).
+
+To build the project, run the following command:
+```
+gradle build
+```
+This will compile the source code, run tests, and generate the necessary artifacts.
+
+To clean up build directory, use:
+
+```
+gradle clean
+```
 
 ## Project structure
 
