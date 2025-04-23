@@ -37,6 +37,7 @@ public class Executor {
             List<String> args;
             for (int i = 0; i < command_queries.size(); i++) {
                 args = new ArrayList<>(command_queries.get(i));
+                // Deciding is command exist in cli or it is external
                 if (cmd.getSubcommands().getOrDefault(args.getFirst(), null) == null) {
                     result = (result == null) ? "" : result;
                     result = executeExternalCommand(args, result);
@@ -45,6 +46,7 @@ public class Executor {
                     result = executeCommand(args.toArray(String[]::new));
                 }
             }
+            // result printing
             if (result != null && !result.isEmpty())
                 System.out.println(result);
         }
@@ -74,7 +76,7 @@ public class Executor {
             
             StringBuilder output = new StringBuilder();
             try (InputStream is = process.getInputStream();
-                 BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (!output.isEmpty()) {
@@ -84,6 +86,7 @@ public class Executor {
                 }
             }
 
+            // giving extra time for external command to execute
             if (!process.waitFor(10, TimeUnit.SECONDS)) {
                 process.destroy();
                 System.err.println("Command timed out");
