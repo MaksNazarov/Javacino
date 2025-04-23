@@ -3,8 +3,4 @@
 gradle
 .vscode
 build
-settings.gradle
-gradlew.bat
-gradle.proprties
-.gitattributes
 
