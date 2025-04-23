@@ -33,7 +33,7 @@ public class Executor {
 
     public void executeQuery(List<List<String>> command_queries) {
         String result = null;
-        if (!command_queries.isEmpty()) {
+        if (!command_queries.isEmpty()) { // while all quiers not processed
             List<String> args;
             for (int i = 0; i < command_queries.size(); i++) {
                 args = new ArrayList<>(command_queries.get(i));

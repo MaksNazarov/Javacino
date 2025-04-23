@@ -25,8 +25,8 @@ Clone the repository:
 ```
 git clone git@github.com:MaksNazarov/CLI-Arch.git
 cd cli-arch
+./gradlew run
 ```
-TODO: build instructions after first task implementation
 
 ## Project structure
 
