@@ -60,4 +60,15 @@ class ExecutorTest {
         assertEquals(expected, outContent.toString());
     }
 
+    @Test
+    void testGlobalVars() {
+        executor.executeQuery(parser.parse("AUTHOR = MaksNazarov"));
+        executor.executeQuery(parser.parse("grep AUTHOR LICENSE"));
+        executor.executeQuery(parser.parse("grep #AUTHOR LICENSE"));
+        String expected = "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER" + System.lineSeparator() +
+                "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM," + System.lineSeparator() +
+                "Copyright (c) 2025 MaksNazarov" +  System.lineSeparator() +  System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
 }
