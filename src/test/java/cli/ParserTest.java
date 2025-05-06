@@ -53,9 +53,25 @@ class ParserTest {
     }
 
     @Test
-    void testParseQuotes() {
+    void testParseQuotesDouble() {
         command = "echo \"dog echo \"";
         expected = List.of(List.of("echo", "dog echo "));
+        got = parser.parse(command);
+        assertEquals(expected, got, "Quoted arguments should be treated as a single argument without quotes");
+    }
+
+    @Test
+    void testParseQuotesSingle() {
+        command = "echo 'dog echo '";
+        expected = List.of(List.of("echo", "dog echo "));
+        got = parser.parse(command);
+        assertEquals(expected, got, "Quoted arguments should be treated as a single argument without quotes");
+    }
+
+    @Test
+    void testParseQuotesCombination() {
+        command = "echo \" 'dog echo ' \"";
+        expected = List.of(List.of("echo", " 'dog echo ' "));
         got = parser.parse(command);
         assertEquals(expected, got, "Quoted arguments should be treated as a single argument without quotes");
     }

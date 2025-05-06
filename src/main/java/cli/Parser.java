@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Parser {
-    /// Parse input string into list of lists of format (command, command args...)
+    /// Parse input string into list of lists of format (command, command args...), separated by pipes
     public List<List<String>> parse(String input) {
         return splitIntoCommands(input).stream()
                 .filter(s -> !s.isEmpty())
@@ -20,13 +20,20 @@ public class Parser {
     private List<String> splitIntoCommands(String input) {
         List<String> commands = new ArrayList<>();
         StringBuilder current = new StringBuilder();
-        boolean inQuotes = false;
+        char currentQuote = 0; // holds last open quote type, or '0' for no quotes
 
         for (char c : input.toCharArray()) {
-            if (c == '"') {
-                inQuotes = !inQuotes;
-                current.append(c); // include quotes in the command part
-            } else if (c == '|' && !inQuotes) {
+            if (c == '"' || c == '\'') {
+                if (currentQuote == c) { // close the quote
+                    currentQuote = 0;
+                    current.append(c);
+                } else if (currentQuote == 0) { // open a new quote
+                    currentQuote = c;
+                    current.append(c);
+                } else {
+                    current.append(c);
+                }
+            } else if (c == '|' && currentQuote == 0) {
                 commands.add(current.toString().trim());
                 current.setLength(0);
             } else {
@@ -60,13 +67,19 @@ public class Parser {
     /// Split command into arguments with respect to quotes.
     private List<String> splitArguments(String command) {
         List<String> args = new ArrayList<>();
-        boolean inQuotes = false;
         StringBuilder currentArg = new StringBuilder();
+        char currentQuote = 0; // holds last open quote type, or '0' for no quotes
 
         for (char c : command.toCharArray()) {
-            if (c == '"') {
-                inQuotes = !inQuotes;
-            } else if (c == ' ' && !inQuotes) {
+            if (c == '"' || c == '\'') {
+                if (currentQuote == c) { // close the quote
+                    currentQuote = 0;
+                } else if (currentQuote == 0) { // open a new quote
+                    currentQuote = c;
+                } else {
+                    currentArg.append(c);
+                }
+            } else if (c == ' ' && currentQuote == 0) {
                 if (!currentArg.isEmpty()) {
                     args.add(currentArg.toString());
                     currentArg.setLength(0);
