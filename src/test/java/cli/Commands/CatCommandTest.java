@@ -24,6 +24,7 @@ class CatCommandTest {
 
     @Test
     void testValidFile() throws IOException {
+        // simple file with several lines of content is outputted correctly
         String data = "JSON is a best file format ever!"
                 + System.lineSeparator()
                 + "I love it with passion!"
@@ -42,6 +43,7 @@ class CatCommandTest {
 
     @Test
     void testEmptyFile() throws IOException {
+        // empty file as input yields empty output
         File tempFile = new File(tempDir, "empty.txt");
         assertTrue(tempFile.createNewFile(), "if this fails, there's an issue with test code");
 
@@ -53,6 +55,7 @@ class CatCommandTest {
 
     @Test
     void testNonExistentFile() {
+        // non-existent file as input yields empty output
         catCommand.file = new File(tempDir, "nonexistent.txt");
 
         String result = catCommand.call();
@@ -61,6 +64,7 @@ class CatCommandTest {
 
     @Test
     void testLargeFile() throws IOException {
+        // a large file as input is processed correctly
         File tempFile = new File(tempDir, "large.txt");
         StringBuilder largeContent = new StringBuilder();
         for (int i = 0; i < 1e6; i++) {

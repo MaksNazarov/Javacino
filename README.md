@@ -3,9 +3,9 @@
 Java-based command line interface simulation.
 
 ## Table of Contents
-- [Description](#Description)
+- [Description](#description)
 - [Dependencies](#dependencies)
-- [Getting Started]()
+- [Getting Started](#getting-started)
 - [Design Document](#design-document)
 - [Project structure](#project-structure)
 - [License](#license)
@@ -20,14 +20,23 @@ Following libraries are used:
 
 - [Mockito](https://site.mockito.org/) - mocking framework to simplify mock object creation for testing.
 
+- [picocli](https://picocli.info/) - framework for creating Command Line Interface apps for JVM.
+
 ## Getting Started
 Clone the repository:
 
 ```
 git clone git@github.com:MaksNazarov/Javacino.git
 cd javacino
+```
+
+This project uses Gradle as its build tool. To build the project, ensure you have Gradle installed on your system. If not, you can download it from [here](https://gradle.org/install/).
+
+```
 ./gradlew run
 ```
+
+This will compile the source code, run tests.
 
 ## Design document
 For project architecture description & decision motivation insights see [here](docs/DesignDocument.md).
@@ -35,6 +44,8 @@ For project architecture description & decision motivation insights see [here](d
 ## Project structure
 
 See [here](docs/Project_structure.md).
+
+For some motivation behind dependencies choice & implementation decisions, see [here](docs/WhyWeDidThis.md).
 
 ## License
 
