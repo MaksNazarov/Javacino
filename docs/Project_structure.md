@@ -22,15 +22,18 @@ Following central classes are intended to be implemented:
 	* run - main loop of program.
 	* readQuery - responsible for parsing input from User and returning it.
 	* executeQuery - executes tokenized input (query) from User.
+
 2. __Parser__ - responsible for input tokenization and construction of command expression. Is based on split by space symbols; quote symbols (‘, “) are respected; command options start with -. Parsed commands are stored as lists of strings - may change in the future based on additional requirements (e.g., with added requirement of supporting &&/|| operators it may be beneficial to return parsed commands as prefix notation expression).
 
 * Methods:
 
     * parse - reads input string and returns a list of parsed commands with args.
+
 3. __Executor__ - responsible for executing the command expression in accordance with set priority/rules. Also handles command return codes and pipeline mechanics.
 * Methods:
     * constructor - adjusts variables for interaction with the environment.
     * execute - executes given query using defined __Command__ objects.
+
 4. __Command__ - interface for simulated commands/utilities like _grep_ and _echo_; will be implemented by various classes such as _EchoCommand_.
 
 In the base of Commands realization was chosen PicoCLI lib. It helps to make base structure and interface for using and writing commands.
