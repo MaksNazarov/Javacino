@@ -26,8 +26,8 @@ Clone the repository:
 ```
 git clone git@github.com:MaksNazarov/Javacino.git
 cd javacino
+./gradlew run
 ```
-TODO: build instructions after first task implementation
 
 ## Design document
 For project architecture description & decision motivation insights see [here](docs/DesignDocument.md).

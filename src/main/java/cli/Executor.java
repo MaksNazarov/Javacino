@@ -33,11 +33,12 @@ public class Executor {
 
     public void executeQuery(List<List<String>> command_queries) {
         String result = null;
-        if (!command_queries.isEmpty()) {
+        if (!command_queries.isEmpty()) { // while all quiers not processed
             List<String> args;
             for (int i = 0; i < command_queries.size(); i++) {
                 args = new ArrayList<>(command_queries.get(i));
-                if (cmd.getSubcommands().getOrDefault(args.get(0), null) == null) {
+                // Deciding is command exist in cli or it is external
+                if (cmd.getSubcommands().getOrDefault(args.getFirst(), null) == null) {
                     result = (result == null) ? "" : result;
                     result = executeExternalCommand(args, result);
                 } else {
@@ -45,15 +46,16 @@ public class Executor {
                     result = executeCommand(args.toArray(String[]::new));
                 }
             }
+            // result printing
             if (result != null && !result.isEmpty())
                 System.out.println(result);
         }
     }
 
     private String executeCommand(String [] args) {
-        Integer error_code = cmd.execute(args);
+        int error_code = cmd.execute(args);
         if (error_code > 1) {
-            System.out.println("Command finished with errorcode: " + error_code.toString());
+            System.out.println("Command finished with error code: " + error_code);
             return "";
         }
         return cmd.getSubcommands().get(args[0]).getExecutionResult();
@@ -74,7 +76,7 @@ public class Executor {
             
             StringBuilder output = new StringBuilder();
             try (InputStream is = process.getInputStream();
-                 BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (!output.isEmpty()) {
@@ -84,6 +86,7 @@ public class Executor {
                 }
             }
 
+            // giving extra time for external command to execute
             if (!process.waitFor(10, TimeUnit.SECONDS)) {
                 process.destroy();
                 System.err.println("Command timed out");

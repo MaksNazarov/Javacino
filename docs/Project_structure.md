@@ -35,7 +35,9 @@ Following central classes are intended to be implemented:
     * execute - executes given query using defined __Command__ objects.
 
 4. __Command__ - interface for simulated commands/utilities like _grep_ and _echo_; will be implemented by various classes such as _EchoCommand_.
-	
+
+In the base of Commands realization was chosen PicoCLI lib. It helps to make base structure and interface for using and writing commands.
+
 * Methods:
     * execute() - executes the command with a passed list of args and options. Returns an exit code signaling an execution success/failure, with 0 as designated value for success & positive integers - non-success.
     

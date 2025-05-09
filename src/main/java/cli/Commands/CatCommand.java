@@ -16,9 +16,8 @@ public class CatCommand implements Callable<String> {
         StringBuilder content = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null)
                 content.append(line).append(System.lineSeparator());
-            }
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return "";

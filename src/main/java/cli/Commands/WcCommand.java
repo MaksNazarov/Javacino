@@ -5,27 +5,28 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@Command (
-    name = "wc", 
-    description = "Counts lines, words, and characters in input"
+@Command(
+        name = "wc",
+        description = "Counts lines, words, and characters in input"
 )
 public class WcCommand implements Runnable {
-    @Parameters(description = "File to analyze", arity="0..*")
-    private File file;
-    
+    @Parameters(description = "File to analyze", arity = "0..*")
+    File file;
+
     @Override
     public void run() {
-        try {
-            BufferedReader reader = getReader();
+        try (BufferedReader reader = getReader()) {
             int lines = 0;
             int words = 0;
             int chars = 0;
 
             String line;
+            // processing source and counting metrics
             while ((line = reader.readLine()) != null) {
                 lines++;
                 words += line.split("\\s+").length;
@@ -39,8 +40,13 @@ public class WcCommand implements Runnable {
     }
 
     private BufferedReader getReader() throws IOException {
-        if (file != null)
-            return new BufferedReader(new FileReader(file));
+        // getting correct source for reading looking at given arg
+        if (file != null) {
+            if (file.isFile())
+                return new BufferedReader(new FileReader(file)); 
+            else 
+                return new BufferedReader(new StringReader(file.getPath()));
+        }
         return new BufferedReader(new InputStreamReader(System.in));
     }
 }
