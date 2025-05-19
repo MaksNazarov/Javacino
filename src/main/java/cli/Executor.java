@@ -22,6 +22,8 @@ import picocli.CommandLine.Command;
         PwdCommand.class,
         WcCommand.class,
         GrepCommand.class,
+        CdCommand.class,
+        LsCommand.class,
         CommandLine.HelpCommand.class
     }
 )

@@ -12,6 +12,6 @@ import picocli.CommandLine.Command;
 public class PwdCommand implements Callable<String> {
     @Override
     public String call() {
-        return Paths.get("").toAbsolutePath().toString();
+        return Paths.get(System.getProperty("user.dir")).toAbsolutePath().toString();
     }
 }
