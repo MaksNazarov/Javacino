@@ -2,13 +2,14 @@ package cli.Commands;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 
 @Command(
-    name = "ls",
-    description = "List directory contents"
+        name = "ls",
+        description = "List directory contents"
 )
 public class LsCommand implements Runnable {
     @Parameters(index = "0", arity = "0..1", description = "Directory to list")
@@ -51,8 +52,10 @@ public class LsCommand implements Runnable {
                 }
                 output.append(file.getName());
             }
+            System.out.println(output);
             result = output.toString();
         } catch (Exception e) {
+            System.err.println("ls: " + e.getMessage());
             result = "ls: " + e.getMessage();
         }
     }
