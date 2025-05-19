@@ -6,7 +6,6 @@ import picocli.CommandLine.Parameters;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 
 @Command(
         name = "cd",

@@ -47,7 +47,7 @@ public class LsCommand implements Runnable {
 
             StringBuilder output = new StringBuilder();
             for (File file : files) {
-                if (output.length() > 0) {
+                if (!output.isEmpty()) {
                     output.append("\n");
                 }
                 output.append(file.getName());
@@ -55,8 +55,8 @@ public class LsCommand implements Runnable {
             System.out.println(output);
             result = output.toString();
         } catch (Exception e) {
-            System.err.println("ls: " + e.getMessage());
             result = "ls: " + e.getMessage();
+            System.err.println(result);
         }
     }
 
