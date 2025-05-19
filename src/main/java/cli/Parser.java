@@ -2,6 +2,7 @@ package cli;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -20,25 +21,29 @@ public class Parser {
     private List<String> splitIntoCommands(String input) {
         List<String> commands = new ArrayList<>();
         StringBuilder current = new StringBuilder();
-        char currentQuote = 0; // holds last open quote type, or '0' for no quotes
+        Stack<Character> currentQuotes = new Stack<>(); // holds all open quotes in order
 
         for (char c : input.toCharArray()) {
             if (c == '"' || c == '\'') {
-                if (currentQuote == c) { // close the quote
-                    currentQuote = 0;
+                if (!currentQuotes.empty() && currentQuotes.peek() == c) { // close the quote
+                    currentQuotes.pop();
                     current.append(c);
-                } else if (currentQuote == 0) { // open a new quote
-                    currentQuote = c;
+                } else if (currentQuotes.isEmpty()) { // open a new quote
+                    currentQuotes.add(c);
                     current.append(c);
-                } else {
+                } else { // non-quote char
                     current.append(c);
                 }
-            } else if (c == '|' && currentQuote == 0) {
+            } else if (c == '|' && currentQuotes.empty()) {
                 commands.add(current.toString().trim());
                 current.setLength(0);
             } else {
                 current.append(c);
             }
+        }
+
+        if (!currentQuotes.empty()) {
+            throw new IllegalStateException("Mismatched quotes");
         }
 
         if (!current.isEmpty()) {

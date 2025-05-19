@@ -15,8 +15,11 @@ public class Shell {
                 
                 if (input.isEmpty())
                     continue;
-
-                executor.executeQuery(parser.parse(input));
+                try {
+                    executor.executeQuery(parser.parse(input));
+                } catch (Exception e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
             }
         }
     }
