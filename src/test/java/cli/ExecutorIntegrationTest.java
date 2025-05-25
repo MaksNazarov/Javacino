@@ -22,8 +22,9 @@ class ExecutorIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        executor = new Executor();
-        parser = new Parser();
+        ShellContext shellContext = new ShellContext();
+        executor = new Executor(shellContext);
+        parser = new Parser(shellContext);
         System.setOut(new PrintStream(outContent));
     }
 

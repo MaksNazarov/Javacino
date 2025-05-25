@@ -5,8 +5,9 @@ import java.util.Scanner;
 
 public class Shell {
     public static void main(String[] args) {
-        final Executor executor = new Executor();
-        final Parser parser = new Parser();
+        final ShellContext shellContext = new ShellContext();
+        final Executor executor = new Executor(shellContext);
+        final Parser parser = new Parser(shellContext);
         
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {

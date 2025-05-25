@@ -17,8 +17,9 @@ class ExecutorTest {
 
     @BeforeEach
     void setUp() {
-        executor = new Executor();
-        parser = new Parser();
+        ShellContext shellContext = new ShellContext();
+        executor = new Executor(shellContext);
+        parser = new Parser(shellContext);
         System.setOut(new PrintStream(outContent));
     }
 
@@ -64,7 +65,7 @@ class ExecutorTest {
     void testGlobalVars() {
         executor.executeQuery(parser.parse("AUTHOR = MaksNazarov"));
         executor.executeQuery(parser.parse("grep AUTHOR LICENSE"));
-        executor.executeQuery(parser.parse("grep #AUTHOR LICENSE"));
+        executor.executeQuery(parser.parse("grep $AUTHOR LICENSE"));
         String expected = "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER" + System.lineSeparator() +
                 "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM," + System.lineSeparator() +
                 "Copyright (c) 2025 MaksNazarov" +  System.lineSeparator() +  System.lineSeparator();
