@@ -45,6 +45,10 @@ In the base of Commands realization was chosen PicoCLI lib. It helps to make bas
     
     All command classes are implementations of this interface, which allows Executor to easily organize/schedule complex command expressions. Notable _Command_ implementations include _Exit_, which shuts down the CLI, and _ExternalCommand_, which runs the provided expression as external shell command.
 
+5. __ShellContext__ - responsible for the handling of global vars.
+* Methods:
+    * substituteVariables(String input) - replaces all global variables in input string with its values. The priority is given to saved values over system ones. If no variable with given name is found, an exception is thrown.
+    * setVariable(String name, String value) - sets the variable with given name to the given value. Can "overwrite" system variables: actual system var is unchanged, but trying to substitute it will result in the new value being returned.
 
 ### Testing environment
 Implemented with the __JUnit__ __framework__, this part of the project contains unit & integration tests used to verify correctness of the main part.

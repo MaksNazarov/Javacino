@@ -14,7 +14,8 @@ class ParserTest {
 
     @BeforeEach
     void setUp() {
-        parser = new Parser();
+        ShellContext shellContext = new ShellContext();
+        parser = new Parser(shellContext);
     }
 
     @Test

@@ -27,16 +27,19 @@ import picocli.CommandLine.Command;
 )
 public class Executor {
     private final CommandLine cmd = new CommandLine(this);
-    private final Map<String, String> globalVars = new HashMap<>();
+    private final ShellContext shellContext;
 
-    public void executeQuery(List<List<String>> command_queries) {
+    public Executor(ShellContext shellContext) {
+        this.shellContext = shellContext;
+    }
+
+    public void executeQuery(List<List<String>> commandQueries) {
         String result = null;
-        if (!command_queries.isEmpty()) { // while all queries not processed
-            List<String> args;
-            for (int i = 0; i < command_queries.size(); i++) {
-                args = new ArrayList<>(command_queries.get(i));
-                if (isSetStatement(args)) {
-                    runSetStatement(args);
+        if (!commandQueries.isEmpty()) { // while all queries not processed
+            for (int i = 0; i < commandQueries.size(); i++) {
+                List<String> args = new ArrayList<>(commandQueries.get(i));
+                if (isAssignment(args)) {
+                    runAssignment(args);
                 } else if (cmd.getSubcommands().getOrDefault(args.getFirst(), null) == null) {
                     result = (result == null) ? "" : result;
                     result = executeExternalCommand(args, result);
@@ -46,43 +49,27 @@ public class Executor {
                 }
             }
             // result printing
-            if (result != null && !result.isEmpty())
+            if (result != null && !result.isEmpty()) {
                 System.out.println(result);
+            }
         }
     }
 
-    private void runSetStatement(List<String> args) {
-        assert isSetStatement(args);
-        globalVars.put(args.get(0), args.get(2));
+    private void runAssignment(List<String> args) {
+        shellContext.setVariable(args.get(0), args.get(2));
     }
 
     private String executeCommand(String[] args) {
-        String[] substituted_args = substituteGlobalVars(args);
-        int error_code = cmd.execute(substituted_args);
-        if (error_code > 1) {
-            System.out.println("Command finished with error code: " + error_code);
+        int errorCode = cmd.execute(args);
+        if (errorCode > 1) {
+            System.out.println("Command finished with error code: " + errorCode);
             return "";
         }
         return cmd.getSubcommands().get(args[0]).getExecutionResult();
     }
 
-    private boolean isSetStatement(List<String> args) {
-        return (args.size() >= 3 && Objects.equals(args.get(1), "="));
-    }
-
-    /// Replaces #NAME-like strings with values of saved global vars if there are any.
-    private String[] substituteGlobalVars(String[] args) {
-        String[] updatedArgs = new String[args.length];
-        for (int i = 0; i < args.length; ++i) {
-            String arg = args[i];
-            if (arg.startsWith("#")) {
-                String globalVarName = arg.substring(1);
-                updatedArgs[i] = globalVars.getOrDefault(globalVarName, arg);
-            } else {
-                updatedArgs[i] = arg;
-            }
-        }
-        return updatedArgs;
+    private boolean isAssignment(List<String> args) {
+        return args.size() >= 3 && args.get(1).equals("=");
     }
 
     private String executeExternalCommand(List<String> args, String input) {
