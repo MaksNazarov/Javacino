@@ -43,6 +43,13 @@ Several important architectural decisions should be highlighted.
 * Decision: Javacino supports the pipe (|) operator for chaining commands.
 * Rationale: Pipes allow users to combine multiple commands, where the output of one command becomes the input of the next. This is a fundamental feature of Unix-like shells. 
 
+4. Global vars support
+* Decision: ShellContext class is created to interact with both Parser and Executor
+* Rationale: global vars set() operation is a command, to be processed by Executor, and get() operation should be run before command call to decrease the risks of substitution being late.
+
+* Decision: global vars do not support pipes.
+* Rationale: doing so will seriously alter existing relationship b/w Parser and Executor.
+
 4. Testing Frameworks:
 * Decisions: use JUnit + Mockito.
 * Rationale: Familiarity, robust mocking capabilities for isolated testing.
@@ -52,7 +59,6 @@ Several important architectural decisions should be highlighted.
 
 ### 5.2 Component viewpoint
 Purpose: Describe runtime interactions
-<!-- TODO: add pic -->
 
 Interactions:
 1. Shell reads input -> Invokes Parser.
