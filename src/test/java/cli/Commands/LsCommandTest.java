@@ -34,7 +34,7 @@ class LsCommandTest {
 
         System.setProperty("user.dir", tempDir.toString());
         lsCommand.directory = null;
-        lsCommand.run();
+        lsCommand.call();
 
         String[] output = lsCommand.getExecutionResult().split("\n");
         Set<String> expectedFiles = new HashSet<>(Arrays.asList("file1.txt", "file2.txt", "dir1"));
@@ -54,7 +54,7 @@ class LsCommandTest {
         assertTrue(file2.createNewFile());
 
         lsCommand.directory = testDir.getAbsolutePath();
-        lsCommand.run();
+        lsCommand.call();
 
         String[] output = lsCommand.getExecutionResult().split("\n");
         Set<String> expectedFiles = new HashSet<>(Arrays.asList("file1.txt", "file2.txt"));
@@ -66,7 +66,7 @@ class LsCommandTest {
     @Test
     void testLsNonExistentDirectory() {
         lsCommand.directory = "/nonexistent/directory";
-        lsCommand.run();
+        lsCommand.call();
 
         assertTrue(lsCommand.getExecutionResult().startsWith("ls: cannot access"));
     }
@@ -77,7 +77,7 @@ class LsCommandTest {
         assertTrue(testFile.createNewFile());
 
         lsCommand.directory = testFile.getAbsolutePath();
-        lsCommand.run();
+        lsCommand.call();
 
         assertTrue(lsCommand.getExecutionResult().startsWith("ls: cannot access"));
     }
