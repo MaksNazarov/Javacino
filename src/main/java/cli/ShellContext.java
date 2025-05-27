@@ -89,7 +89,13 @@ public class ShellContext {
         }
 
         String nestedResolved = substituteVariablesOnce(varName); // recursive replacement
-        return shellVariables.getOrDefault(nestedResolved, System.getenv(varName));
+        String varValue = shellVariables.get(nestedResolved);
+        if (varValue != null) return varValue;
+        else {
+            varValue = System.getenv(varName);
+            if (varValue != null) return varValue;
+            throw new IllegalArgumentException("Global var not recognized: " + varName);
+        }
     }
 
     /// Set the given variable's value to the provided one. Can "overwrite" system values.
