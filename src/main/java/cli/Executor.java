@@ -2,6 +2,7 @@ package cli;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,16 +15,18 @@ import cli.Commands.*;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
-@Command (
-    name = "",
-    subcommands = {
-        EchoCommand.class,
-        ExitCommand.class,
-        PwdCommand.class,
-        WcCommand.class,
-        GrepCommand.class,
-        CommandLine.HelpCommand.class
-    }
+@Command(
+        name = "",
+        subcommands = {
+                EchoCommand.class,
+                ExitCommand.class,
+                PwdCommand.class,
+                WcCommand.class,
+                GrepCommand.class,
+                CdCommand.class,
+                LsCommand.class,
+                CommandLine.HelpCommand.class
+        }
 )
 public class Executor {
     private final CommandLine cmd = new CommandLine(this);
@@ -41,13 +44,16 @@ public class Executor {
                     result = (result == null) ? "" : result;
                     result = executeExternalCommand(args, result);
                 } else {
-                    if (i > 0 && result != null) args.add(result);
+                    if (i > 0 && result != null) {
+                        args.add(result);
+                    }
                     result = executeCommand(args.toArray(String[]::new));
                 }
             }
             // result printing
-            if (result != null && !result.isEmpty())
+            if (result != null && !result.isEmpty()) {
                 System.out.println(result);
+            }
         }
     }
 
@@ -87,20 +93,20 @@ public class Executor {
 
     private String executeExternalCommand(List<String> args, String input) {
         try {
-            ProcessBuilder pb = new ProcessBuilder(args);
+            ProcessBuilder pb = new ProcessBuilder(args).directory(new File(System.getProperty("user.dir")));
             Process process = pb.start();
-            
+
             if (input != null) {
                 try (OutputStream os = process.getOutputStream();
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os))) {
+                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os))) {
                     writer.write(input);
                     writer.flush();
                 }
             }
-            
+
             StringBuilder output = new StringBuilder();
             try (InputStream is = process.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (!output.isEmpty()) {
@@ -116,14 +122,14 @@ public class Executor {
                 System.err.println("Command timed out");
                 return "";
             }
-            
+
             if (process.exitValue() != 0) {
                 System.err.println("External command failed with exit code: " + process.exitValue());
                 return "";
             }
-            
+
             return output.toString();
-            
+
         } catch (IOException | InterruptedException e) {
             System.err.println("Error executing external command: " + e.getMessage());
             return "";
